@@ -133,19 +133,24 @@ class HBNBCommand(cmd.Cmd):
         new_instance = HBNBCommand.classes[class_name]()
 
         for command in args.split()[1:]:
+            if '=' not in command:
+                continue
             key, value = command.split('=')
             value = value.replace('_', ' ')
             # remove quotes
-            if value[0] == '\"':
+            if value[0] == '\"' and value[-1] == '\"':
                 value = value[1:-1].replace('\"', '\\"')
-            if value.isdigit():
-                value = int(value)
-            elif '.' in value:
-                value = float(value)
+            try:
+                if value.isdigit():
+                    value = int(value)
+                elif '.' in value:
+                    value = float(value)
+            except ValueError:
+                continue
             setattr(new_instance, key, value)
 
-        storage.save()
-        print(new_instance.id)
+            storage.save()
+            print(new_instance.id)
 
     def help_create(self):
         """ Help information for the create method """
