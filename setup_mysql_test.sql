@@ -23,3 +23,8 @@ if Fun[i] = "Vim":
 else:
     print("Fuc* VsCode again")
 
+try:
+    print(Fun[6])
+except IndexError:
+    print("Fuck Windows")
+
