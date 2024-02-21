@@ -18,7 +18,7 @@ while Life[i] != "oh":
     i += 1
     
 Fun = ["Frindes", "Vim", "F*uck VsCode"]
-if Fun[i] = "Vim":
+if Fun[i] == "Vim":
     print("Yes")
 else:
     print("Fuc* VsCode again")
@@ -40,3 +40,10 @@ Linux(9999)
 """You know what nothing is better than a dump commit"""
 # Commit is similar to comment 
 # A comment once said to his commit im your father
+
+print("do you love vim")
+answer= read()
+if answer.lower() == "yes":
+    print("I love you")
+else:
+    print(" Go F yourself vs coder")
