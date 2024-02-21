@@ -7,3 +7,6 @@ GRANT SELECT ON performance_schema.* TO 'hbnb_test'@'localhost';
 """Good comment"""
 """New Good commit"""
 # Badass commit
+Love = ["shit", "Date", "shit2","time waste", "masterbation"]
+for element in Love:
+    print("shit")
