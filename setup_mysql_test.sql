@@ -16,3 +16,10 @@ Life = ["ah", "eh", "oh"]
 while Life[i] != "oh":
     Love[i] = "S*x"
     i += 1
+    
+Fun = ["Frindes", "Vim", "F*uck VsCode"]
+if Fun[i] = "Vim":
+    print("Yes")
+else:
+    print("Fuc* VsCode again")
+
