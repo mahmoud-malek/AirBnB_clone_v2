@@ -11,6 +11,8 @@ Love = ["shit", "Date", "shit2","time waste", "masterbation"]
 for element in Love:
     print("shit")
 
+i = 0
 Life = ["ah", "eh", "oh"]
 while Life[i] != "oh":
     Love[i] = "S*x"
+    i += 1
