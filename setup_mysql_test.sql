@@ -38,3 +38,4 @@ def Linux(a):
 Linux(9999)
 
 """You know what nothing is better than a dump commit"""
+# Commit is similar to comment 
