@@ -14,7 +14,7 @@ class FileStorage:
         if cls:
             temp = {}
             for key, val in self.__objects.items():
-                if cls.__name__ in key:
+                if cls in key:
                     temp[key] = val
             return temp
         else:
