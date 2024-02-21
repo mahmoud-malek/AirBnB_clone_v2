@@ -4,7 +4,7 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey, Integer, Float, Table
 from os import getenv
 from sqlalchemy.orm import relationship
-import models
+from models.review import Review
 
 place_amenity = Table(
     'place_amenity', Base.metadata,
@@ -51,25 +51,32 @@ class Place(BaseModel, Base):
         @property
         def reviews(self):
             """ This is a getter method to get all linked reviews
-                                     of this place"""
-            from engine import db_storage
-            related_reviews = []
-            for review in db_storage.all(Review).values():
+                                               of this place"""
+            from models import storage
+            from models.review import Review
+            review_list = []
+            for review in storage.all(Review).values():
                 if review.place_id == self.id:
-                    related_reviews.append(review)
-            return related_reviews
+                    review_list.append(review)
+            return review_list
 
         @property
         def amenities(self):
             """ This is a getter method to get all linked amenities
             of this place"""
-            return self.amenity_ids
+            from models import storage
+            from models.amenity import Amenity
+            amenity_list = []
+            for amenity in storage.all(Amenity).values():
+                if amenity.id in self.amenity_ids:
+                    amenity_list.append(amenity)
+            return amenity_list
 
         @amenities.setter
         def amenities(self, obj):
             """ This is a setter method to set the amenities
             of this place"""
             if isinstance(obj, Amenity) and obj.id not in self.amenity_ids:
-                self.amenity_ids.append(obj)
+                self.amenity_ids.append(obj.id)
             else:
                 pass

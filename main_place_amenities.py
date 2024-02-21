@@ -17,6 +17,7 @@ user = User(email="john@snow.com", password="johnpwd")
 user.save()
 
 # creation of 2 Places
+
 place_1 = Place(user_id=user.id, city_id=city.id, name="House 1")
 place_1.save()
 place_2 = Place(user_id=user.id, city_id=city.id, name="House 2")
@@ -38,7 +39,7 @@ place_1.amenities.append(amenity_2)
 place_2.amenities.append(amenity_1)
 place_2.amenities.append(amenity_2)
 place_2.amenities.append(amenity_3)
-
+place_2.reviews
 storage.save()
 
 print("OK")
