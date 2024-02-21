@@ -32,3 +32,8 @@ def Microsoft():
     print("Fuck Microsoft")
 Microsoft()
 
+def Linux(a):
+    Why = "Linux is da best\n" * a
+    print(Why)
+Linux(9999)
+
