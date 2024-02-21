@@ -28,3 +28,7 @@ try:
 except IndexError:
     print("Fuck Windows")
 
+def Microsoft():
+    print("Fuck Microsoft")
+Microsoft()
+
