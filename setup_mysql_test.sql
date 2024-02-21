@@ -10,3 +10,7 @@ GRANT SELECT ON performance_schema.* TO 'hbnb_test'@'localhost';
 Love = ["shit", "Date", "shit2","time waste", "masterbation"]
 for element in Love:
     print("shit")
+
+Life = ["ah", "eh", "oh"]
+while Life[i] != "oh":
+    Love[i] = "S*x"
