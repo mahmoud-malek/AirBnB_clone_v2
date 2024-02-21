@@ -39,3 +39,4 @@ Linux(9999)
 
 """You know what nothing is better than a dump commit"""
 # Commit is similar to comment 
+# A comment once said to his commit im your father
