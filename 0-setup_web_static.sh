@@ -13,13 +13,7 @@ sudo mkdir -p /data/web_static/{releases/test,shared}
 echo "Hello i'm Mahmoud Malek" > /data/web_static/releases/test/index.html
 
 # creating new simbolic link to test folder
-symbolic_link="/data/web_static/current"
-
-if [ -L "$symbolic_link" ]; then
-	rm "$symbolic_link"
-fi
-
-ln -sfT /data/web_static/releases/test/ "$symbolic_link"
+ln -sf /data/web_static/releases/test/ /data/web_static/current
 
 # change ownership of folder /data/
 chown -R ubuntu:ubuntu /data/
@@ -27,18 +21,27 @@ chown -R ubuntu:ubuntu /data/
 
 # Update the Nginx configuration to serve the content
 configs="server {
-listen 80 default_server;
-listen [::]:80 default_server;
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    add_header X-Served-By $HOSTNAME;
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
 
-server_name yes-ok.tech
-root /data/web_static;
-index index.html index.htm index.nginx-debian.html;
+    location /hbnb_static {
+        alias /data/web_static/current;
+    }
 
-location /hbnb_static {
-	alias /data/web_static/current/hbnb_static/;
+    location /redirect_me {
+        return 301 https://google.com;
+    }
+
+    error_page 404 /404.html;
+    location = /404.html {
+        root /var/www/html;
+        internal;
+    }
 }
-
-}"
+"
 
 echo "$configs" > /etc/nginx/sites-available/default
 
