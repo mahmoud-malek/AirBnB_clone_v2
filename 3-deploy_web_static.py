@@ -14,17 +14,19 @@ def do_pack():
     """ A function to pack all files in web_static
     folder
     """
-    date_now = datetime.now().strftime("%Y%m%d%H%M%S")
-    archive_path = 'versions/web_static_{}.tgz'.format(date_now)
-    local('mkdir -p versions')
-
-    status = local(
-        'tar -cvzf {} web_static'.format(archive_path))
-
-    if status.failed:
+    dt = datetime.utcnow()
+    file = "versions/web_static_{}{}{}{}{}{}.tgz".format(dt.year,
+                                                         dt.month,
+                                                         dt.day,
+                                                         dt.hour,
+                                                         dt.minute,
+                                                         dt.second)
+    if os.path.isdir("versions") is False:
+        if local("mkdir -p versions").failed is True:
+            return None
+    if local("tar -cvzf {} web_static".format(file)).failed is True:
         return None
-    else:
-        return archive_path
+    return file
 
 
 def do_deploy(archive_path):
