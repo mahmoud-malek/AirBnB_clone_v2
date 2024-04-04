@@ -6,6 +6,7 @@ from fabric.api import run, put, env
 
 env.hosts = ['34.202.158.120', '18.234.145.174']
 
+
 def do_deploy(archive_path):
     """ this is  a function to deploy the server """
 
@@ -32,7 +33,7 @@ def do_deploy(archive_path):
         return False
 
     status = run('mv /data/web_static/releases/{}/web_static/* \
-    /data/web_static/releases/{}'                                                                  .format(archive_name, archive_name))
+    /data/web_static/releases/{}'.format(archive_name, archive_name))
     if status.failed:
         return False
 
@@ -46,7 +47,7 @@ def do_deploy(archive_path):
         return False
 
     status = run('ln -s /data/web_static/releases/{} \
-        /data/web_static/current'                                                                  .format(archive_name))
+        /data/web_static/current'.format(archive_name))
     if status.failed:
         return False
 
