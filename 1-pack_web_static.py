@@ -12,12 +12,13 @@ def do_pack():
     folder
     """
     date_now = datetime.now().strftime("%Y%m%d%H%M%S")
-
+    archive_path = 'versions/web_static_{}.tgz'.format(date_now)
     local('mkdir -p versions')
+
     status = local(
-        'tar -cvf versions/web_static_{}.tgz web_static'.format(date_now))
+        'tar -cvzf {} web_static'.format(archive_path))
 
     if status.failed:
         return None
     else:
-        return 'versions/web_static_{}.tgz'.format(date_now)
+        return archive_path
