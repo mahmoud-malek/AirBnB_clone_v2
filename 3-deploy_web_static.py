@@ -79,7 +79,7 @@ def deploy():
     """this is a function to fully deploy the website"""
 
     archive_path = do_pack()
-    if not archive_path:
+    if archive_path is None:
         return False
 
     return do_deploy(archive_path)
