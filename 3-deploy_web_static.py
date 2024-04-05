@@ -3,7 +3,7 @@
  that creates and distributes an archive to your web servers,
   using the function deploy:"""
 
-from fabric.api import env, local, run, put, runs_once
+from fabric.api import env, local, run, put, runs_once, sudo
 from datetime import datetime
 import os
 env.hosts = ['18.234.145.174', '34.202.158.120']
@@ -39,34 +39,34 @@ def do_deploy(archive_path):
     if status.failed:
         return False
 
-    status = run('mkdir -p /data/web_static/releases/{}'.format(archive_name))
+    status = sudo('mkdir -p /data/web_static/releases/{}'.format(archive_name))
     if status.failed:
         return False
 
-    status = run('tar -xzf /tmp/{}.tgz -C /data/web_static/releases/{}'.format(
+    status = sudo('tar -xzf /tmp/{}.tgz -C /data/web_static/releases/{}'.format(
      archive_name, archive_name))
     if status.failed:
         return False
 
-    status = run('rm /tmp/{}.tgz'.format(archive_name))
+    status = sudo('rm /tmp/{}.tgz'.format(archive_name))
     if status.failed:
         return False
 
-    status = run('mv /data/web_static/releases/{}/web_static/* \
+    status = sudo('mv /data/web_static/releases/{}/web_static/* \
     /data/web_static/releases/{}'.format(archive_name, archive_name))
     if status.failed:
         return False
 
-    status = run(
+    status = sudo(
      'rm -rf /data/web_static/releases/{}/web_static'.format(archive_name))
     if status.failed:
         return False
 
-    status = run('rm -rf /data/web_static/current')
+    status = sudo('rm -rf /data/web_static/current')
     if status.failed:
         return False
 
-    status = run('ln -s /data/web_static/releases/{} \
+    status = sudo('ln -s /data/web_static/releases/{} \
         /data/web_static/current'.format(archive_name))
     if status.failed:
         return False
