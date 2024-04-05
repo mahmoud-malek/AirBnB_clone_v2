@@ -13,6 +13,8 @@ def do_clean(number=0):
     number = int(number)
     if number < 2:
         number = 2
+    else:
+        number += 1
     local('ls -dt versions/* | tail -n +{} | xargs rm -rf'.format(number))
     run('ls -dt /data/web_static/releases/* |\
          tail -n +{} | xargs rm -rf'.format(number))
