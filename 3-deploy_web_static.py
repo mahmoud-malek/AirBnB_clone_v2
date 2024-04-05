@@ -3,7 +3,7 @@
  that creates and distributes an archive to your web servers,
   using the function deploy:"""
 
-from fabric.api import env, local, run, put, runs_once, sudo
+from fabric.api import env, local, run, put, runs_once
 from datetime import datetime
 import os
 env.hosts = ['18.234.145.174', '34.202.158.120']
@@ -19,7 +19,7 @@ def do_pack():
     local('mkdir -p versions')
 
     status = local(
-     'tar -cvzf {} web_static'.format(archive_path))
+        'tar -cvzf {} web_static'.format(archive_path))
 
     if status.failed:
         return None
@@ -30,48 +30,27 @@ def do_pack():
 def do_deploy(archive_path):
     """ this is  a function to deploy the server """
 
-    if not os.path.isfile(archive_path):
+    if os.path.isfile(archive_path) is False:
         return False
-
-    archive_name = archive_path.split('/')[1].split('.')[0]
-
-    status = put(archive_path, '/tmp')
-    if status.failed:
+    try:
+        archive = archive_path.split("/")[-1]
+        path = "/data/web_static/releases"
+        put("{}".format(archive_path), "/tmp/{}".format(archive))
+        folder = archive.split(".")
+        run("mkdir -p {}/{}/".format(path, folder[0]))
+        new_archive = '.'.join(folder)
+        run("tar -xzf /tmp/{} -C {}/{}/"
+            .format(new_archive, path, folder[0]))
+        run("rm /tmp/{}".format(archive))
+        run("mv {}/{}/web_static/* {}/{}/"
+            .format(path, folder[0], path, folder[0]))
+        run("rm -rf {}/{}/web_static".format(path, folder[0]))
+        run("rm -rf /data/web_static/current")
+        run("ln -sf {}/{} /data/web_static/current"
+            .format(path, folder[0]))
+        return True
+    except Exception as e:
         return False
-
-    status = sudo('mkdir -p /data/web_static/releases/{}'.format(archive_name))
-    if status.failed:
-        return False
-
-    status = sudo('tar -xzf /tmp/{}.tgz -C /data/web_static/releases/{}'.format(
-     archive_name, archive_name))
-    if status.failed:
-        return False
-
-    status = sudo('rm /tmp/{}.tgz'.format(archive_name))
-    if status.failed:
-        return False
-
-    status = sudo('mv /data/web_static/releases/{}/web_static/* \
-    /data/web_static/releases/{}'.format(archive_name, archive_name))
-    if status.failed:
-        return False
-
-    status = sudo(
-     'rm -rf /data/web_static/releases/{}/web_static'.format(archive_name))
-    if status.failed:
-        return False
-
-    status = sudo('rm -rf /data/web_static/current')
-    if status.failed:
-        return False
-
-    status = sudo('ln -s /data/web_static/releases/{} \
-        /data/web_static/current'.format(archive_name))
-    if status.failed:
-        return False
-
-    return True
 
 
 def deploy():
