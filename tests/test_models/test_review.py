@@ -75,7 +75,7 @@ class TestReview(unittest.TestCase):
         if models.storage_t == 'db':
             self.assertEqual(review.place_id, None)
         else:
-            self.assertEqual(review.place_id,  None)
+            self.assertEqual(review.place_id, None)
 
     def test_user_id_attr(self):
         """Test Review has attr user_id, and it's an empty string"""
@@ -84,7 +84,7 @@ class TestReview(unittest.TestCase):
         if models.storage_t == 'db':
             self.assertEqual(review.user_id, None)
         else:
-            self.assertEqual(review.user_id,  None)
+            self.assertEqual(review.user_id, None)
 
     def test_text_attr(self):
         """Test Review has attr text, and it's an empty string"""
@@ -93,7 +93,7 @@ class TestReview(unittest.TestCase):
         if models.storage_t == 'db':
             self.assertEqual(review.text, None)
         else:
-            self.assertEqual(review.text,  None)
+            self.assertEqual(review.text, None)
 
     def test_to_dict_creates_dict(self):
         """test to_dict method creates a dictionary with proper attrs"""
