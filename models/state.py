@@ -3,6 +3,7 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+import models
 
 
 class State(BaseModel, Base):
@@ -13,11 +14,10 @@ class State(BaseModel, Base):
 
     @property
     def cities(self):
-        """Getter attribute that returns the list of City instances
-                         with state_id
-        matching the current State.id"""
-        city_list = []
-        for city in models.storage.all(City).values():
-            if city.state_id == self.id:
-                city_list.append(city)
-        return city_list
+        storage = models.storage.all()
+        result = []
+        for key in storage:
+            city = key.split('City')
+            if (city[0] == 'City' and storage[key].state_id == self.id):
+                result.append(var[key])
+        return (result)
